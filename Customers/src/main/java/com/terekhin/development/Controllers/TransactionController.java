@@ -20,6 +20,6 @@ public class TransactionController extends Controller{
         long account_id = Long.parseLong(request.getParameter("id"));
 
         webContext.setVariable("transactions", _dbCtx.Transactions().getAllByAccountId(account_id));
-        tmpl.process("/pages/trans/list", webContext, response.getWriter());
+        this.view("/pages/trans/list",request,response, webContext,tmpl);
     }
 }

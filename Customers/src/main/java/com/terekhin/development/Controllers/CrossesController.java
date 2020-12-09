@@ -49,12 +49,12 @@ public class CrossesController extends Controller{
                     }
                     if (!response.isCommitted()) {
                         webContext.setVariable("cross", cross);
-                        tmpl.process("/pages/cross-courses/add", webContext, response.getWriter());
+                        this.view("/pages/cross-courses/add",request,response, webContext,tmpl);
                     }
                     break;
                 default:
                     webContext.setVariable("crosses", _dbCtx.Crosses().getAllByCurrencyId(currency_id));
-                    tmpl.process("/pages/cross-courses/list", webContext, response.getWriter());
+                    this.view("/pages/cross-courses/list",request,response, webContext,tmpl);
             }
         }
 

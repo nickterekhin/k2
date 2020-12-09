@@ -70,14 +70,14 @@ public class AccountsController extends Controller{
                             account.setBalance(account.getBalance() + (amount) * (isCharge ? 1 : -1));
 
                             if(!isCharge && account.getBalance()<amount) throw new NotificationService("There are not enough money on you Account");
-                            _dbCtx.Accounts().update(account);
+
                             Transaction transaction = new Transaction();
                             transaction.setAccountId(account.getId());
                             transaction.setAmount(amount);
                             transaction.setCreatedAt(DateTime.now());
                             transaction.setTypeId(isCharge? TransactionTypesList.CHARGE.getAction():TransactionTypesList.WITHDRAW.getAction());
                             transaction.setDescription((isCharge?"Account Charged with ":"Account Withdraw with ")+ Double.toString(amount));
-                            _dbCtx.Transactions().create(transaction);
+                            _dbCtx.Accounts().charge(account,transaction);
 
                             this.viewRedirect(request,response,"Balance Changed Successfully!");
                         }catch(NotificationService notify)

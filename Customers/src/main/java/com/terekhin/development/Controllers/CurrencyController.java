@@ -43,7 +43,7 @@ public class CurrencyController extends Controller{
                 if(!response.isCommitted())
                 {
                     request.setAttribute("currency", currency);
-                    tmpl.process("/pages/currencies/add", webContext, response.getWriter());
+                    this.view("/pages/currencies/add",request,response, webContext,tmpl);
                 }
                 break;
             case EDIT:
@@ -63,12 +63,13 @@ public class CurrencyController extends Controller{
                 }
                 if(!response.isCommitted()) {
                     request.setAttribute("currency", currency);
-                    tmpl.process("/pages/customers/edit", webContext, response.getWriter());
+                    this.view("/pages/customers/edit",request,response, webContext,tmpl);
                 }
                 break;
             default:
                 webContext.setVariable("currencies",_dbCtx.Currency().getAll());
-                tmpl.process("/pages/currencies/list", webContext, response.getWriter());
+                this.view("/pages/currencies/list",request,response, webContext,tmpl);
+
         }
     }
 }

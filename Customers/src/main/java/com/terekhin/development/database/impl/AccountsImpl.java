@@ -71,4 +71,22 @@ public class AccountsImpl extends Repository<Account,Long> implements IAccounts 
 
     }
 
+    @Override
+    public void charge(Account account, Transaction transaction) throws NotificationService {
+        entityManager = EMF.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(account);
+            entityManager.persist(transaction);
+            entityManager.getTransaction().commit();
+        }
+        catch(Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            throw new NotificationService(e.getMessage());
+        }finally {
+            entityManager.close();
+        }
+    }
+
 }

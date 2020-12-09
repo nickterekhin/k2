@@ -49,7 +49,7 @@ public class CustomersController extends Controller {
                 if(!response.isCommitted())
                 {
                     request.setAttribute("customer", customer);
-                    tmpl.process("/pages/customers/add", webContext, response.getWriter());
+                    this.view("/pages/customers/add",request,response, webContext,tmpl);
                 }
                 break;
             case EDIT:
@@ -70,7 +70,7 @@ public class CustomersController extends Controller {
                 }
                 if(!response.isCommitted()) {
                     request.setAttribute("customer", customer);
-                    tmpl.process("/pages/customers/edit", webContext, response.getWriter());
+                    this.view("/pages/customers/edit",request,response, webContext,tmpl);
                 }
 
                 break;
@@ -96,7 +96,7 @@ public class CustomersController extends Controller {
                 }
 
                 webContext.setVariable("customers",customers);
-                tmpl.process("/pages/customers/list", webContext, response.getWriter());
+                this.view("/pages/customers/list",request,response, webContext,tmpl);
         }
 
 
