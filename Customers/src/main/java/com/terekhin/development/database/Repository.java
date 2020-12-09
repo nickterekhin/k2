@@ -1,6 +1,7 @@
 package com.terekhin.development.database;
 
 import com.terekhin.development.Listeners.EMF;
+import com.terekhin.development.domain.CrossCourse;
 import com.terekhin.development.helpers.NotificationService;
 
 import javax.persistence.*;
@@ -121,7 +122,10 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
 
         try {
             entityManager = EMF.createEntityManager();
-            T entity = (T) entityManager.find(_pojo, key);
+            CriteriaQuery<T> _criteria = this.getCriteria();
+            Root<T> root = _criteria.from(_pojo);
+            _criteria.select(root).where(entityManager.getCriteriaBuilder().equal(root.get("id"),key));
+            T entity = (T) entityManager.createQuery(_criteria).getSingleResult();
             if (entity == null) {
                 throw new IllegalArgumentException("Entity with id = " + key + " not exist!");
             }

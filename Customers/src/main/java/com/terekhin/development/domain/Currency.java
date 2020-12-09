@@ -15,7 +15,7 @@ public class Currency {
     private long id;
     private String Name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "fromCurrency",orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "fromCurrency",orphanRemoval = true,cascade = CascadeType.DETACH)
     private List<CrossCourse> crossCoursesFrom;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "currency",orphanRemoval = true)
