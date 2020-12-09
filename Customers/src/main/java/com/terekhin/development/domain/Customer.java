@@ -1,6 +1,5 @@
 package com.terekhin.development.domain;
 
-import sun.jvm.hotspot.jdi.ArrayReferenceImpl;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name="Customers")
-public class Customer {
+public class Customer{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,8 +15,10 @@ public class Customer {
     private String firstName;
     @Column(name="LastName",nullable = false)
     private String lastName;
+    @Transient
+    private double totalBalance =0.0;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer",orphanRemoval = true)
     private List<Account> accounts;
 
     public Customer() {
@@ -54,5 +55,13 @@ public class Customer {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public double getTotalBalance() {
+        return totalBalance;
+    }
+
+    public void setTotalBalance(double totalBalance) {
+        this.totalBalance = totalBalance;
     }
 }

@@ -1,6 +1,7 @@
 package com.terekhin.development.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -21,6 +22,9 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "currencyId", insertable = false,updatable = false)
     private Currency currency;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account",orphanRemoval = true)
+    private List<Transaction> transactions;
 
     public Account() {
     }

@@ -33,20 +33,23 @@
         </h3>
 
         <div class="float-right" id="manage-buttons" th:if="${template_path}!='/'">
+            <div layout:fragment="extra_buttons" style="display:inline-block">
 
-            <a th:href="(${cid}?(@{{add_path}(add_path=${template_path},action='add',cid=${cid})}):@{{add_path}(add_path=${template_path},action='add')})" href="" class="btn btn-success add-btn btn-sm"><i class="fal fa-plus"></i>Add New</a>
+            </div>
+            <a th:href="(${cid}?(@{{add_path}(add_path=${template_path},action='add',cid=${cid})}):@{{add_path}(add_path=${template_path},action='add')})" href="" class="btn btn-success add-btn btn-sm" th:if="${show_btn}"><i class="fal fa-plus"></i>Add New</a>
 
-            <a th:href="(${cid}?@{{view_all_path}(view_all_path=${template_path},cid=${cid})}:@{{view_all_path}(view_all_path=${template_path})})" class="btn btn-info add-btn btn-sm"><i class="fal fa-hand-point-right"></i>View All</a>
+            <a th:href="(${cid}?@{{view_all_path}(view_all_path=${template_path},cid=${cid})}:@{{view_all_path}(view_all_path=${template_path})})" class="btn btn-info add-btn btn-sm" th:if="${show_btn}"><i class="fal fa-hand-point-right"></i>View All</a>
 
         </div>
 
         <div class="clearfix"></div>
     </div>
-    <div class="row">
-        <div class="col" id="notification-message">
-           <!-- Notifications-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col" id="notification-message" th:include="notify/notifications::notification" th:if="${message}!=null">
+                </div>
+            </div>
         </div>
-    </div>
     <div layout:fragment="content" class="container-fluid">
 
     </div>

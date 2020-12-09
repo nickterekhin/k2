@@ -23,6 +23,11 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
     }
 
     @Override
+    public EntityManager getGlobalTransaction() {
+        return EMF.createEntityManager();
+    }
+
+    @Override
     public void create(T entity) throws NotificationService {
         try {
             entityManager = EMF.createEntityManager();

@@ -1,4 +1,5 @@
-
+var opt = {
+};
 (function($,obj){
 
     obj.table_obj = null;

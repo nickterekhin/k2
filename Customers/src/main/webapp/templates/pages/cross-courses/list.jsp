@@ -7,6 +7,9 @@
     <title>Gallery</title>
 </head>
 <body>
+<div layout:fragment="extra_buttons">
+    <a th:href="@{/currencies}" class="btn btn-light btn-sm">Back to Currencies List</a>
+</div>
 <div layout:fragment="content">
     <div class="row">
         <div class="col-md-12 col-lg-12">

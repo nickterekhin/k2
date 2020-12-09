@@ -4,7 +4,9 @@ public enum ActionParser {
     ADD("add"),
     EDIT("edit"),
     DELETE("delete"),
-    LIST("list");
+    LIST("list"),
+    CHARGE("charge"),
+    TRANSFER("transfer");
 
     private final String action;
     ActionParser(String action) {

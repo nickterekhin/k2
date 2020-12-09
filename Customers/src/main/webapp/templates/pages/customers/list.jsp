@@ -20,6 +20,7 @@
                                     <th>#</th>
                                     <th>FirstName</th>
                                     <th>LastName</th>
+                                    <th>Total Balance (UAH)</th>
                                     <th class="action-buttons">Actions</th>
                                 </tr>
                                 </thead>
@@ -28,6 +29,7 @@
                                     <td th:text="${customer.getId()}"></td>
                                     <td th:text="${customer.getFirstName()}"></td>
                                     <td th:text="${customer.getLastName()}"></td>
+                                    <td th:text="${#numbers.formatDecimal(customer.getTotalBalance(),1,'POINT',2,'COMMA')}"></td>
                                     <td>
                                         <a th:href="@{/customers(action='edit',id=${customer.getId()})}" title="Edit" class="btn btn-warning btn-sm"><i class="fal fa-pencil"></i>Edit</a>&nbsp;
                                         <a th:href="@{/accounts(cid=${customer.getId()})}" title="Account" class="btn btn-info btn-sm"><i class="fal fa-wallet"></i>Account</a>&nbsp;

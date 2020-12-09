@@ -14,11 +14,14 @@
 <script type="text/javascript" src="../../assets/tables/datatables.min.js"  th:src="@{/assets/tables/datatables.min.js}"></script>
 
 <script type="text/javascript" src="../../assets/js/functions.js"  th:src="@{/assets/js/functions.js}"></script>
+    <script type="text/javascript" layout:fragment="table_option">
+
+    </script>
     <script type="text/javascript">
 
             $(document).ready(function(){
                 if($('.table').length>0) {
-                    customer_tables.init_table('.table');
+                    customer_tables.init_table('.table',opt);
                 }
 
             });

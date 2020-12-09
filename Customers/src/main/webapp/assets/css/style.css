@@ -24,6 +24,15 @@ i.fa, i.fal, i.fas {
 .page-head #manage-buttons i {
   margin-right: 5px; }
 
+.transaction {
+  font-weight: 600; }
+  .transaction-charge {
+    color: #166328; }
+  .transaction-withdraw {
+    color: #711b1b; }
+  .transaction-transfer {
+    color: #1a4879; }
+
 .admin-wrapper {
   min-height: calc(100% - 80px);
   display: flex;

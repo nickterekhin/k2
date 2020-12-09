@@ -1,5 +1,7 @@
 package com.terekhin.development.Controllers;
 
+import com.terekhin.development.domain.Account;
+import com.terekhin.development.domain.CrossCourse;
 import com.terekhin.development.domain.Customer;
 import com.terekhin.development.helpers.ActionParser;
 import com.terekhin.development.helpers.NotificationService;
@@ -10,6 +12,7 @@ import org.thymeleaf.context.WebContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class CustomersController extends Controller {
 
@@ -73,7 +76,26 @@ public class CustomersController extends Controller {
                 break;
 
             default:
-                webContext.setVariable("customers",_dbCtx.Customers().getAll());
+                List<Customer> customers =  _dbCtx.Customers().getAll();
+                for(Customer cust : customers)
+                {
+                    double sum =0;
+                    for(Account account : _dbCtx.Accounts().getAllByCustomerId(cust.getId()))
+                    {
+                        if(account.getCurrency().getName().equals("UAH"))
+                        {
+                            sum+=account.getBalance();
+                        }else
+                        {
+                            CrossCourse cc = account.getCurrency().getCrossCoursesFrom().stream().filter(e->e.getToCurrency().getName().equals("UAH")).findFirst().orElse(null);
+                            if(cc!=null)
+                            sum+=account.getBalance()*cc.getAmount();
+                        }
+                    }
+                    cust.setTotalBalance(sum);
+                }
+
+                webContext.setVariable("customers",customers);
                 tmpl.process("/pages/customers/list", webContext, response.getWriter());
         }
 

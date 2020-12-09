@@ -13,3 +13,17 @@ i.fa,i.fal,i.fas{
 .page-head #manage-buttons i {
   margin-right: 5px;
 }
+.transaction{
+  font-weight: 600;
+    &-charge{
+    color: #166328;
+
+  }
+  &-withdraw{
+    color: #711b1b;
+
+  }
+  &-transfer{
+    color: #1a4879;
+  }
+}

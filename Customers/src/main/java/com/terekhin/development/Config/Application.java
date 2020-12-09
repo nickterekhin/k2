@@ -54,6 +54,7 @@ public class Application {
         this.actions.put("/currencies",new CurrencyController());
         this.actions.put("/accounts",new AccountsController());
         this.actions.put("/cross-courses",new CrossesController());
+        this.actions.put("/transactions",new TransactionController());
 
     }
     private String getRequestPath(final HttpServletRequest request) {

@@ -2,6 +2,8 @@ package com.terekhin.development.database;
 
 import com.terekhin.development.helpers.NotificationService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,4 +21,6 @@ public interface IRepository<T,K extends Serializable> {
     void delete(K key) throws NotificationService;
 
     List<T> getAll() throws NotificationService;
+
+    EntityManager getGlobalTransaction();
 }

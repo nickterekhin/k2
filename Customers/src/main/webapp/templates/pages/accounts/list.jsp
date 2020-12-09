@@ -7,6 +7,9 @@
     <title>Gallery</title>
 </head>
 <body>
+<div layout:fragment="extra_buttons">
+    <a th:href="@{/customers}" class="btn btn-light btn-sm">Back to Customers List</a>
+</div>
 <div layout:fragment="content">
     <div class="row">
         <div class="col-md-12 col-lg-12">
@@ -35,10 +38,10 @@
                                 <td th:text="${account.getCurrency().getName()}"></td>
                                 <td th:text="${account.getBalance()}"></td>
                                 <td>
-                                    <a th:href="@{/transactions(cid=${account.getId()})}" title="Transaction history" class="btn btn-primary btn-sm"><i class="fal fa-list"></i>Transactions</a>&nbsp;
-                                    <a th:href="@{/accounts(action='charge',id=${account.getId()},cid=${cid})}" title="Charge Account's balance" class="btn btn-info btn-sm"><i class="fal fa-plus"></i>Charge Account</a>&nbsp;
-                                    <a th:href="@{/accounts(action='transfer',id=${account.getId()},cid=${cid})}" title="Transfer" class="btn btn-warning btn-sm"><i class="fal fa-exchange"></i>Transfer</a>&nbsp;
-                                    <a th:href="@{/accounts(action='delete',id=${account.getId()},cid=${cid})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
+                                    <a th:href="@{/transactions(id=${account.getId()},cid=${cid})}" title="Transaction history" class="btn btn-primary btn-sm"><i class="fal fa-list"></i>Transactions</a>
+                                    <a th:href="@{/accounts(action='charge',id=${account.getId()},cid=${cid})}" title="Charge Account's balance" class="btn btn-info btn-sm"><i class="fal fa-plus"></i>Charge Account</a>
+                                    <a th:href="@{/accounts(action='transfer',id=${account.getId()},cid=${cid})}" title="Transfer" class="btn btn-warning btn-sm" th:if="${accounts.size()}>1"><i class="fal fa-exchange"></i>Transfer</a>
+                                    <a th:href="@{/accounts(action='delete',id=${account.getId()},cid=${cid})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>
 
                                 </td>
                             </tr>
