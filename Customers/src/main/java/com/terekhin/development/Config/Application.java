@@ -1,6 +1,7 @@
 package com.terekhin.development.Config;
 
 import com.terekhin.development.Controllers.*;
+import com.terekhin.development.domain.CrossCourse;
 import nz.net.ultraq.thymeleaf.JodaDialect;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
@@ -12,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Application {
-
-    private  Map<String,Controller> actions;
+    private Map<String,RouteConfig> routes;
     private TemplateEngine templateEngine;
 
     public Application(final ServletContext servletContext) {
@@ -24,9 +24,9 @@ public class Application {
 
     }
 
-    public Controller getAction(HttpServletRequest request)
+    public RouteConfig getRoute(HttpServletRequest request)
     {
-        return actions.get(getRequestPath(request));
+        return routes.get(getRequestPath(request));
     }
 
     public TemplateEngine getTemplateEngine(){return this.templateEngine;}
@@ -48,14 +48,25 @@ public class Application {
 
     private void initRoutes()
     {
-        this.actions = new HashMap<String,Controller>();
-        this.actions.put("/", new HomeController());
-        this.actions.put("/customers", new CustomersController());
-        this.actions.put("/currencies",new CurrencyController());
-        this.actions.put("/accounts",new AccountsController());
-        this.actions.put("/cross-courses",new CrossesController());
-        this.actions.put("/transactions",new TransactionController());
-
+        this.routes = new HashMap<>();
+        this.routes.put("/", new RouteConfig<>(HomeController.class));
+        this.routes.put("/customers", new RouteConfig<>(CustomersController.class, "index"));
+        this.routes.put("/customers/add", new RouteConfig<>(CustomersController.class, "create"));
+        this.routes.put("/customers/delete", new RouteConfig<>(CustomersController.class, "destroy"));
+        this.routes.put("/customers/edit", new RouteConfig<>(CustomersController.class, "update"));
+        this.routes.put("/accounts",new RouteConfig<>(AccountsController.class));
+        this.routes.put("/accounts/add",new RouteConfig<>(AccountsController.class,"create"));
+        this.routes.put("/accounts/delete",new RouteConfig<>(AccountsController.class,"destroy"));
+        this.routes.put("/accounts/charge",new RouteConfig<>(AccountsController.class,"charge"));
+        this.routes.put("/accounts/transfer",new RouteConfig<>(AccountsController.class,"transfer"));
+        this.routes.put("/currencies",new RouteConfig<>(CurrencyController.class));
+        this.routes.put("/currencies/add",new RouteConfig<>(CurrencyController.class,"create"));
+        this.routes.put("/currencies/delete",new RouteConfig<>(CurrencyController.class,"destroy"));
+        this.routes.put("/currencies/edit",new RouteConfig<>(CurrencyController.class,"edit"));
+        this.routes.put("/cross-courses",new RouteConfig<>(CrossesController.class));
+        this.routes.put("/cross-courses/add",new RouteConfig<>(CrossesController.class,"create"));
+        this.routes.put("/cross-courses/delete",new RouteConfig<>(CrossesController.class,"destroy"));
+        this.routes.put("/transactions",new RouteConfig<>(TransactionController.class));
     }
     private String getRequestPath(final HttpServletRequest request) {
         String requestURI = request.getRequestURI();

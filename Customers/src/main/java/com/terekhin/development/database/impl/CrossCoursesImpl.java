@@ -7,6 +7,7 @@ import com.terekhin.development.database.Repository;
 import com.terekhin.development.domain.Account;
 import com.terekhin.development.domain.CrossCourse;
 import com.terekhin.development.helpers.NotificationService;
+import org.hibernate.HibernateException;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -22,7 +23,7 @@ public class CrossCoursesImpl extends Repository<CrossCourse,Long> implements IC
         try {
             return entityManager.createQuery(_criteria).getResultList();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 

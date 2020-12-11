@@ -31,9 +31,9 @@
                                     <td th:text="${customer.getLastName()}"></td>
                                     <td th:text="${#numbers.formatDecimal(customer.getTotalBalance(),1,'POINT',2,'COMMA')}"></td>
                                     <td>
-                                        <a th:href="@{/customers(action='edit',id=${customer.getId()})}" title="Edit" class="btn btn-warning btn-sm"><i class="fal fa-pencil"></i>Edit</a>&nbsp;
+                                        <a th:href="@{/customers/edit(id=${customer.getId()})}" title="Edit" class="btn btn-warning btn-sm"><i class="fal fa-pencil"></i>Edit</a>&nbsp;
                                         <a th:href="@{/accounts(cid=${customer.getId()})}" title="Account" class="btn btn-info btn-sm"><i class="fal fa-wallet"></i>Account</a>&nbsp;
-                                        <a th:href="@{/customers(action='delete',id=${customer.getId()})}" title="Delete" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
+                                        <a th:href="@{/customers/delete(id=${customer.getId()})}" title="Delete" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
                                     </td>
                                 </tr>
                                 </tbody>

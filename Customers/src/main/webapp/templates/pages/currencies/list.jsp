@@ -33,9 +33,9 @@
                                     </li>
                                 </ul><span style="color:#6f1414" th:if="${currency.getCrossCoursesFrom().size()}==0"><i class="fa fa-times"></i></span></td>
                                 <td>
-                                    <a th:href="@{/currencies(action='edit',id=${currency.getId()})}" title="Edit" class="btn btn-warning btn-sm"><i class="fal fa-pencil"></i>Edit</a>&nbsp;
+                                    <a th:href="@{/currencies/eddit(id=${currency.getId()})}" title="Edit" class="btn btn-warning btn-sm"><i class="fal fa-pencil"></i>Edit</a>&nbsp;
                                     <a th:href="@{/cross-courses(cid=${currency.getId()})}" title="Cross-Courses" class="btn btn-info btn-sm"><i class="fal fa-sync-alt"></i>Cross-Courses</a>&nbsp;
-                                    <a th:href="@{/currencies(action='delete',id=${currency.getId()})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
+                                    <a th:href="@{/currencies/delete(id=${currency.getId()})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
 
                                 </td>
                             </tr>

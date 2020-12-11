@@ -3,6 +3,7 @@ package com.terekhin.development.database;
 import com.terekhin.development.Listeners.EMF;
 import com.terekhin.development.domain.CrossCourse;
 import com.terekhin.development.helpers.NotificationService;
+import org.hibernate.HibernateException;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -36,7 +37,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             entityManager.persist(entity);
             entityManager.getTransaction().commit();
         }
-            catch(Exception e)
+            catch(HibernateException e)
             {
                 entityManager.getTransaction().rollback();
                 throw new NotificationService(e.getMessage());
@@ -51,7 +52,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             entityManager = EMF.createEntityManager();
             return (T) entityManager.find(_pojo, key);
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 
@@ -70,7 +71,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             }
             return entity;
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 
@@ -88,7 +89,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             entityManager.merge(entity);
             entityManager.getTransaction().commit();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             entityManager.getTransaction().rollback();
             throw new NotificationService(e.getMessage());
@@ -106,7 +107,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             entityManager.remove(entity);
             entityManager.getTransaction().commit();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             entityManager.getTransaction().rollback();
             throw new NotificationService(e.getMessage());
@@ -133,7 +134,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
             entityManager.remove(entity);
             entityManager.getTransaction().commit();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             entityManager.getTransaction().rollback();
             throw new NotificationService(e.getMessage());
@@ -152,7 +153,7 @@ public abstract class Repository<T,K extends Serializable> implements IRepositor
         try {
             return entityManager.createQuery(_criteria).getResultList();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 

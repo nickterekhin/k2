@@ -6,6 +6,7 @@ import com.terekhin.development.database.Repository;
 import com.terekhin.development.domain.Account;
 import com.terekhin.development.domain.Transaction;
 import com.terekhin.development.helpers.NotificationService;
+import org.hibernate.HibernateException;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -22,7 +23,7 @@ public class AccountsImpl extends Repository<Account,Long> implements IAccounts 
         try {
             return entityManager.createQuery(_criteria).getResultList();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 
@@ -40,7 +41,7 @@ public class AccountsImpl extends Repository<Account,Long> implements IAccounts 
         try {
             return entityManager.createQuery(_criteria).getResultList();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             throw new NotificationService(e.getMessage());
 
@@ -61,7 +62,7 @@ public class AccountsImpl extends Repository<Account,Long> implements IAccounts 
             entityManager.getTransaction().commit();
             return true;
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
                 entityManager.getTransaction().rollback();
                 throw new NotificationService(e.getMessage());
@@ -80,7 +81,7 @@ public class AccountsImpl extends Repository<Account,Long> implements IAccounts 
             entityManager.persist(transaction);
             entityManager.getTransaction().commit();
         }
-        catch(Exception e)
+        catch(HibernateException e)
         {
             entityManager.getTransaction().rollback();
             throw new NotificationService(e.getMessage());

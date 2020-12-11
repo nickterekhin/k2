@@ -36,7 +36,7 @@
                                 <td th:text="${course.getFromCurrency().getName()}+'/'+${course.getToCurrency().getName()}"></td>
                                 <td th:text="${course.getAmount()}"></td>
                                 <td>
-                                    <a th:href="@{/cross-courses(action='delete',id=${course.getId()},cid=${cid})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
+                                    <a th:href="@{/cross-courses/delete(id=${course.getId()},cid=${cid})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>&nbsp;
 
                                 </td>
                             </tr>

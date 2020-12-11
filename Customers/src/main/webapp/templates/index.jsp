@@ -36,7 +36,7 @@
             <div layout:fragment="extra_buttons" style="display:inline-block">
 
             </div>
-            <a th:href="(${cid}?(@{{add_path}(add_path=${template_path},action='add',cid=${cid})}):@{{add_path}(add_path=${template_path},action='add')})" href="" class="btn btn-success add-btn btn-sm" th:if="${show_btn}"><i class="fal fa-plus"></i>Add New</a>
+            <a th:href="(${cid}?(@{{add_path}/{action}(add_path=${template_path},action='add',cid=${cid})}):@{{add_path}/{action}(add_path=${template_path},action='add')})" href="" class="btn btn-success add-btn btn-sm" th:if="${show_btn}"><i class="fal fa-plus"></i>Add New</a>
 
             <a th:href="(${cid}?@{{view_all_path}(view_all_path=${template_path},cid=${cid})}:@{{view_all_path}(view_all_path=${template_path})})" class="btn btn-info add-btn btn-sm" th:if="${show_btn}"><i class="fal fa-hand-point-right"></i>View All</a>
 

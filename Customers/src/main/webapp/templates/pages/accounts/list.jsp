@@ -39,9 +39,9 @@
                                 <td th:text="${account.getBalance()}"></td>
                                 <td>
                                     <a th:href="@{/transactions(id=${account.getId()},cid=${cid})}" title="Transaction history" class="btn btn-primary btn-sm"><i class="fal fa-list"></i>Transactions</a>
-                                    <a th:href="@{/accounts(action='charge',id=${account.getId()},cid=${cid})}" title="Charge Account's balance" class="btn btn-info btn-sm"><i class="fal fa-plus"></i>Charge Account</a>
-                                    <a th:href="@{/accounts(action='transfer',id=${account.getId()},cid=${cid})}" title="Transfer" class="btn btn-warning btn-sm" th:if="${accounts.size()}>1"><i class="fal fa-exchange"></i>Transfer</a>
-                                    <a th:href="@{/accounts(action='delete',id=${account.getId()},cid=${cid})}" title="Edit" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>
+                                    <a th:href="@{/accounts/charge(id=${account.getId()},cid=${cid})}" title="Charge Account's balance" class="btn btn-info btn-sm"><i class="fal fa-plus"></i>Charge Account</a>
+                                    <a th:href="@{/accounts/transfer(id=${account.getId()},cid=${cid})}" title="Transfer" class="btn btn-warning btn-sm" th:if="${accounts.size()}>1"><i class="fal fa-exchange"></i>Transfer</a>
+                                    <a th:href="@{/accounts/delete(id=${account.getId()},cid=${cid})}" title="Delete" class="btn btn-danger btn-sm"><i class="fal fa-trash"></i>Delete</a>
 
                                 </td>
                             </tr>

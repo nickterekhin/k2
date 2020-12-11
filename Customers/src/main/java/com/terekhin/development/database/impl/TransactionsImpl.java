@@ -7,6 +7,7 @@ import com.terekhin.development.domain.Account;
 import com.terekhin.development.domain.Transaction;
 import com.terekhin.development.domain.TransactionType;
 import com.terekhin.development.helpers.NotificationService;
+import org.hibernate.HibernateException;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -23,7 +24,7 @@ public class TransactionsImpl extends Repository<Transaction,Long> implements IT
             try {
                 return entityManager.createQuery(_criteria).getResultList();
             }
-            catch(Exception e)
+            catch(HibernateException e)
             {
                 throw new NotificationService(e.getMessage());
 

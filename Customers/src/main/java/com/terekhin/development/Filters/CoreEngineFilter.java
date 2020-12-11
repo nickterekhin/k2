@@ -1,13 +1,19 @@
 package com.terekhin.development.Filters;
 
 import com.terekhin.development.Config.Application;
+import com.terekhin.development.Config.RouteConfig;
 import com.terekhin.development.Controllers.Controller;
+import com.terekhin.development.helpers.NotificationService;
+import com.terekhin.development.helpers.NotificationType;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class CoreEngineFilter implements Filter {
 
@@ -29,9 +35,13 @@ public class CoreEngineFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        if(!execute(req,resp))
-        {
-            filterChain.doFilter(servletRequest,servletResponse);
+        try {
+            if(!execute(req,resp))
+            {
+                filterChain.doFilter(servletRequest,servletResponse);
+            }
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
         }
     }
 
@@ -40,28 +50,38 @@ public class CoreEngineFilter implements Filter {
     public void destroy() {
 
     }
-    private boolean execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException
-    {
+    private boolean execute(HttpServletRequest req, HttpServletResponse resp) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException, IOException {
+
+        RouteConfig route = _application.getRoute(req);
+
+        Method method = route.getMethod();
+
+        TemplateEngine templateEngine = _application.getTemplateEngine();
+
+
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setHeader("Param", "no-cache");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        WebContext webContext = new WebContext(req, resp, this._servletCtx, req.getLocale());
+        Controller controller = route.getInstance();
+        controller.initGlobal(req,resp,webContext);
+        String path =null;
         try {
-            Controller controller = _application.getAction(req);
-            if (controller == null)
-                return false;
+            path = (String) method.invoke(controller, webContext);
+            if (path != null && !path.isEmpty())
+                templateEngine.process(path, webContext, webContext.getResponse().getWriter());
 
-
-            TemplateEngine templateEngine = _application.getTemplateEngine();
-
-            resp.setContentType("text/html;charset=utf-8");
-            resp.setHeader("Param", "no-cache");
-            resp.setHeader("Cache-Control", "no-cache");
-            resp.setDateHeader("Expires", 0);
-
-            controller.initModelView(req, resp, this._servletCtx, templateEngine);
-
-            return true;
-        }
-        catch(Exception e)
+        }catch(InvocationTargetException exception)
         {
-            throw new ServletException(e);
+            NotificationService notify = (NotificationService) exception.getTargetException();
+            notify.show(webContext,NotificationType.ERROR);
+            templateEngine.process("/errors/500", webContext, webContext.getResponse().getWriter());
         }
+
+
+
+        return true;
     }
 }

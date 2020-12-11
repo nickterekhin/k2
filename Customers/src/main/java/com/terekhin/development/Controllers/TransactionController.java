@@ -1,25 +1,36 @@
 package com.terekhin.development.Controllers;
 
-import org.joda.time.DateTime;
-import org.thymeleaf.TemplateEngine;
+import com.terekhin.development.helpers.NotificationService;
 import org.thymeleaf.context.WebContext;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class TransactionController extends Controller{
 
     public TransactionController() {
-        this.tmpl_dir = "/trans";
-        this.show_btn = false;
+        this.tmplDir = "/trans";
+        this.showBtn = false;
     }
 
     @Override
-    public void getModel(HttpServletRequest request, HttpServletResponse response, WebContext webContext, TemplateEngine tmpl) throws Exception {
-        long cid = Long.parseLong(request.getParameter("cid"));
-        long account_id = Long.parseLong(request.getParameter("id"));
+    public String index(WebContext webContext) throws NotificationService {
+        long account_id = Long.parseLong((String) webContext.getRequest().getParameter("id"));
 
         webContext.setVariable("transactions", _dbCtx.Transactions().getAllByAccountId(account_id));
-        this.view("/pages/trans/list",request,response, webContext,tmpl);
+        return this.view("/pages/trans/list", webContext);
+    }
+
+    @Override
+    public String create(WebContext webContext) throws NotificationService {
+        return null;
+    }
+
+    @Override
+    public String update(WebContext webContext) throws NotificationService {
+        return null;
+    }
+
+    @Override
+    public String destroy(WebContext webContext) throws NotificationService {
+        return null;
     }
 }

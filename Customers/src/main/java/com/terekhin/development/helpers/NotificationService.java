@@ -1,5 +1,7 @@
 package com.terekhin.development.helpers;
 
+import org.thymeleaf.context.WebContext;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class NotificationService extends Exception {
@@ -7,9 +9,9 @@ public class NotificationService extends Exception {
         super(message);
     }
 
-    public void show(HttpServletRequest req, NotificationType messageType)
+    public void show(WebContext webContext, NotificationType messageType)
     {
         Notification notification = new Notification(this.getMessage(),messageType.getType());
-        req.setAttribute("message",notification);
+        webContext.setVariable("message",notification);
     }
 }
