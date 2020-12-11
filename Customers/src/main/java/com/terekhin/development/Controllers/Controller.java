@@ -39,25 +39,15 @@ public abstract class Controller {
     public abstract String destroy(WebContext webContext) throws NotificationService;
 
     protected String viewRedirect(WebContext webContext) throws NotificationService {
-        try {
-            webContext.getResponse().sendRedirect(this.tmplDir +this.queryParam);
-            return null;
-        } catch (IOException e) {
-            throw new NotificationService(e.getMessage());
-        }
+            return "redirect:"+this.tmplDir+this.queryParam;
     }
     protected String viewRedirect(WebContext webContext, String respMessage) throws NotificationService {
-        try {
             if (respMessage == null || respMessage.isEmpty())
                 this.viewRedirect(webContext);
             HttpSession session = webContext.getSession();
             session.setAttribute("message", new NotificationService(respMessage));
-            webContext.getResponse().sendRedirect(this.tmplDir + this.queryParam);
-            return null;
-        }catch(IOException e)
-        {
-            throw new NotificationService(e.getMessage());
-        }
+            return this.viewRedirect(webContext);
+
     }
     protected String view(String path, WebContext webContext) throws NotificationService {
         HttpSession session = webContext.getRequest().getSession();

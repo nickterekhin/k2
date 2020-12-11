@@ -70,8 +70,15 @@ public class CoreEngineFilter implements Filter {
         String path =null;
         try {
             path = (String) method.invoke(controller, webContext);
-            if (path != null && !path.isEmpty())
+            int pos_redirect = path.indexOf(':');
+
+            if(pos_redirect!=-1 && path.substring(0,pos_redirect).equals("redirect")) {
+                String s = path.substring(0,pos_redirect);
+                String redirect_path = path.substring(pos_redirect+1);
+                resp.sendRedirect(redirect_path);
+            }else{
                 templateEngine.process(path, webContext, webContext.getResponse().getWriter());
+            }
 
         }catch(InvocationTargetException exception)
         {
